@@ -27,7 +27,7 @@ cL = 0;
 cR = 1;
 
 % 1.1 Defining the vector `x` and the number of points `n`: ------------- %
-n = 20;
+n = 11;
 
 % 1.2 Expressing the analytical solution as an anonymous function: ------ %
 f_ana = @(x, Pe) (exp(Pe * x) - 1)/(exp(Pe) - 1);
