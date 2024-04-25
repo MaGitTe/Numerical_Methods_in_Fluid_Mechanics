@@ -70,18 +70,6 @@ K(n, n-1) = 0;
 
 A = PeG * (alpha*Pb + (1-alpha)*Pf) - K;
 
-% DEFINING A EXPLICITLY %%%%%%%%%
-% u1_A = -Pe/(2 * dx) - 1/dx^2;
-% h_A = 2/dx^2;
-% o1_A = Pe/(2 * dx) - 1/dx^2;
-% 
-% A = tridiag(n, u1_A, h_A, o1_A);
-% 
-% A(1, 1) = 1;
-% A(n, n) = 1;
-% A(1, 2) = 0;
-% A(n, n-1) = 0;
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Defining rhs
 rhs = zeros(n, 1);
