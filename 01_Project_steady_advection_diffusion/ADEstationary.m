@@ -21,9 +21,9 @@ dx = 1/n;
 PeG = Pe * dx;
 
 % 2. Setting up the system of equations
-u1_Pc = -1/(2*dx^2);
+u1_Pc = -1/2;
 h_Pc = 0;
-o1_Pc = 1/(2*dx^2);
+o1_Pc = 1/2;
 
 
 Pc = tridiag(n, u1_Pc, h_Pc, o1_Pc);
@@ -32,8 +32,8 @@ Pc(n, n) = 0;
 Pc(1, 2) = 0;
 Pc(n, n-1) = 0;
 
-u1_K = 1/(dx^2); 
-h_K = -2/(dx^2);
+u1_K = 1; 
+h_K = -2;
 o1_K = u1_K;
 
 
