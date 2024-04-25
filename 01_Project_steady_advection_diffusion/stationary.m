@@ -14,13 +14,6 @@ close all; % Closing all our current figures
 clear; clc; % Clearing our Workspace and Command Window resp.
 
 Pe_list = [-10, -2, 0, 2, 10]; % Predefined list of Péclet numbers
-alpha_list = [0,0.5,1];
-
-
-% List for plots
-legend_list = ["forward", "central", "backward"];
-color_list = ["red", "blue", "green"];
-linestyle_list = ['x', 'o', '+'];
 
 %Boundary conditions
 cL = 0;
@@ -40,25 +33,21 @@ set(fig, 'defaulttextinterpreter', 'latex') % enabling LaTex styling
 for i = 1:length(Pe_list)
 
     
-    x = linspace(0,1,n);
+    [c_num, x, PeG]  = ADEstationary(n, Pe_list(i), cL, cR);
     c_ana = f_ana(x, Pe_list(i)); % calling our anonymous function to evaluate c(x) at each Pe_i
     
     subplot(length(Pe_list), 1, i)
     % Plotting c(x), and setting a legend correspoding to the appropriate Péclet number
     plot(x, c_ana, '--', 'color', 'black', 'DisplayName', 'analytical', 'LineWidth', 1.5);
     hold on;
-    for j = 1:length(alpha_list)
-        
-        [c_num, x, PeG]  = ADEstationary2(n, Pe_list(i), cL, cR, alpha_list(j));
-        plot(x,c_num, [linestyle_list(j)], 'color', [color_list(j)], 'DisplayName', [legend_list(j)], 'LineWidth', 0.7);
-    end
+    plot(x,c_num, 'o', 'color', 'red', 'DisplayName', 'numerical', 'LineWidth', 1.5);
 
     % Labeling our axis, adding legends, a title and a grid
     % Using the $ signs for LaTex formatting
 
     xlabel('$\hat{x}$ [-]');
     ylabel('$\hat{c}(\hat{x})$ [-]');
-    legend('Location', 'bestoutside');
+    legend('Location', 'best');
     title(['Pe = ' num2str(Pe_list(i))]);
     grid;
     
@@ -66,4 +55,4 @@ for i = 1:length(Pe_list)
 end
 
 
-saveas(fig, 'generalscheme.png')
+saveas(fig, 'numSolution.png')
