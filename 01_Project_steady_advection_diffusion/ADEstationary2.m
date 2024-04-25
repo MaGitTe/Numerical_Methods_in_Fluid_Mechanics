@@ -7,6 +7,8 @@ function [c, x, PeG] = ADEstationary2(n, Pe, cL, cR,alpha)
 %   Pe: (scaler) Péclet number Pe
 %   cL: (scaler) Boundary condition on the left-side
 %   cR: (scaler) Boundary condotion on the right-side
+%   alpha: (scalar) determines difference scheme (=1 bavkward, =0 forward, =0.5
+%   central)
 %
 %   Output:
 %   c:   (vector) [n*1] Approximate solution of c using the FDM
@@ -32,8 +34,8 @@ Pb(n, n) = 0;
 Pb(n, n-1) = 0;
 
 %matrix P_f with forward difference
-h_Pf = -1/(dx);
-o1_Pf = 1/(dx);
+h_Pf = -1;
+o1_Pf = 1;
 u1_Pf = 0;
 
 Pf = tridiag(n, u1_Pf, h_Pf, o1_Pf);
@@ -42,10 +44,21 @@ Pf(n, n) = 0;
 Pf(1, 2) = 0;
 Pf(n, n-1) = 0;
 
+%matrix P_b with backward difference
+h_Pb = 1;
+o1_Pb = 0;
+u1_Pb = -1;
+
+Pb = tridiag(n, u1_Pb, h_Pb, o1_Pb);
+Pb(1, 3) = 0;
+Pb(n, n) = 0;
+Pb(1, 2) = 0;
+Pb(n, n-1) = 0;
+
 %K matrix
-u1_K = 1/(dx^2); 
-h_K = -2/(dx^2);
-o1_K = u1_K;
+u1_K = 1; 
+h_K = -2;
+o1_K = 1;
 
 
 K = tridiag(n, u1_K, h_K, o1_K);
@@ -54,7 +67,6 @@ K(n, n) = -1;
 K(1, 2) = 0;
 K(n, n-1) = 0;
 
-alpha = ones(n);
 
 A = PeG * (alpha*Pb + (1-alpha)*Pf) - K;
 
