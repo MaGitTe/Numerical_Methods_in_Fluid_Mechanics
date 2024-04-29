@@ -54,8 +54,8 @@ plot(dx_list,e_1, 'o', 'color', 'red', 'LineWidth', 1.5)
 % Using the $ signs for LaTex formatting
 
 xlabel('gridsize $dx$ [-]');
-ylabel('error $e_1)$ [-]');
-title(['convergence analysis']);
+ylabel('error $e_1$ [-]');
+title('convergence analysis');
 grid;
     
 
