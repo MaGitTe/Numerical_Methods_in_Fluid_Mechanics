@@ -39,7 +39,7 @@ o1_Pf = 1;
 u1_Pf = 0;
 
 Pf = tridiag(n, u1_Pf, h_Pf, o1_Pf);
-Pf(1, 3) = 0;
+Pf(1, 1) = 0;
 Pf(n, n) = 0;
 Pf(1, 2) = 0;
 Pf(n, n-1) = 0;
@@ -50,7 +50,7 @@ o1_Pb = 0;
 u1_Pb = -1;
 
 Pb = tridiag(n, u1_Pb, h_Pb, o1_Pb);
-Pb(1, 3) = 0;
+Pb(1, 1) = 0;
 Pb(n, n) = 0;
 Pb(1, 2) = 0;
 Pb(n, n-1) = 0;
