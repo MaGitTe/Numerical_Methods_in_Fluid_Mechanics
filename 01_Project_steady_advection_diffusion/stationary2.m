@@ -25,7 +25,7 @@ alpha_list = [0, 0.5, 1]; % [0: forward, 0.5: central, 1: backward]
 cL = 0; % Left BC
 cR = 1; % Right BC
 
-n = 20; % number of nodes
+n = 11; % number of nodes
 
 
 %% 2. Expressing the analytical solution as an anonymous function: ------ %
@@ -42,12 +42,9 @@ for i = 1:length(Pe_list)
 
     % Numerical Solution & Plot (with additional plotting features)
     for j = 1:length(alpha_list)
-        disp(alpha_list(j))
-        disp(Pe_list(i))
 
-        pause
         [c_num, x, PeG]  = ADEstationary2(n, Pe_list(i), cL, cR, alpha_list(j));
-        plot(x,c_num, [linestyle_list(j)], 'color', [color_list(j)], 'DisplayName', [legend_list(j)], 'LineWidth', 1.5);
+        plot(x, c_num, [linestyle_list(j)], 'color', [color_list(j)], 'DisplayName', [legend_list(j)], 'LineWidth', 1.5);
         hold on;
     end
 

@@ -12,7 +12,7 @@ function [c, x, PeG] = ADEstationary2(n, Pe, cL, cR, alpha)
 %   Pe: (scaler) Péclet number Pe
 %   cL: (scaler) Boundary condition on the left-side
 %   cR: (scaler) Boundary condotion on the right-side
-%   alpha: (scalar) determines difference scheme (=1 bavkward, =0 forward, =0.5
+%   alpha: (scalar) determines difference scheme (=1 backward, =0 forward, =0.5
 %   central)
 %
 %   Output:
@@ -24,16 +24,16 @@ function [c, x, PeG] = ADEstationary2(n, Pe, cL, cR, alpha)
 %% 1. Generating the grid and calculating parameters:
 x = linspace(0, 1, n); % Generating the x grid between 0 and 1 using linspace()
 
-dx = 1/n;
+dx = 1/(n-1);
 PeG = Pe * dx;
 
 %% 2. Setting up the system of equations [A]{c} = {rhs}
 
 % 2.1 Defining the [Pb] matrix
 % 2.1.1 Setting up the diagonals for [Pb] to then use the tridiag() function
-h_Pb = -1/(dx);
+h_Pb = 1;
 o1_Pb = 0;
-u1_Pb = -1/(dx);
+u1_Pb = -1;
 
 Pb = tridiag(n, u1_Pb, h_Pb, o1_Pb);
 
