@@ -1,5 +1,10 @@
 function [A] = tridiagcyc(n, u1, h, o1)
-% This function creates a matrix A of size [n*n], this matrix will have a
+% Group 1:
+%   - Lokesh Duvvuru, 10063226
+%   - Marie Tersteegen, 10061302
+%   - Younes Abdeldjalil TOUMI, 10064473
+
+% This function creates a matrix A of size [n, n], this matrix will have a
 % main diagonal, an upper first diagonal and a lower first one.
 % Additionlly in the lower left corner is (o1), and in the upper right
 % corner is (u1).
@@ -11,10 +16,10 @@ function [A] = tridiagcyc(n, u1, h, o1)
 %   o1: (scaler) Upper first diagonal
 %
 %   Output:
-%   A: (matrix) [n*n] Modified Tri-diagonal matrix, with values in the
+%   A: (matrix) [n, n] Modified Tri-diagonal matrix, with values in the
 %   edges
 
-if n<3
+if n < 3
     % If n is lower than 3, we set A=0 and return an error.
     A = 0;
     error('InvalidDimensionError: Dimension (n) must be greater than 2. (n>=3)')
