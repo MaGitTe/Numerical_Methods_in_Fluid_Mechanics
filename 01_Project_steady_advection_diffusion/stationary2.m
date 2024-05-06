@@ -71,3 +71,4 @@ disp('Saving the figure as generalScheme.png...');
 saveas(fig, 'generalScheme.png');
 
 disp('Figured saved!');
+hold off;

@@ -8,10 +8,10 @@ function [A] = tridiag(n, u1, h, o1)
 % main diagonal (h), an upper (o1) and a lower one (u1).
 
 %   Input:
-%   n:  (scaler) Dimension of the matrix
-%   u1: (scaler) Lower first diagonal
-%   h:  (scaler) Main diagonal
-%   o1: (scaler) Upper first diagonal
+%   n:  (scalar) Dimension of the matrix
+%   u1: (scalar) Lower first diagonal
+%   h:  (scalar) Main diagonal
+%   o1: (scalar) Upper first diagonal
 %
 %   Output:
 %   A: (matrix) [n, n] Tri-diagonal matrix
