@@ -8,17 +8,17 @@ function [c, x, PeG] = ADEstationary2(n, Pe, cL, cR, alpha)
 % finite difference method of our given problem.
 
 %   Input:
-%   n:  (scaler) number of nodes
-%   Pe: (scaler) Péclet number Pe
-%   cL: (scaler) Boundary condition on the left-side
-%   cR: (scaler) Boundary condotion on the right-side
+%   n:  (scalar) number of nodes
+%   Pe: (scalar) Péclet number Pe
+%   cL: (scalar) Boundary condition on the left-side
+%   cR: (scalar) Boundary condotion on the right-side
 %   alpha: (scalar) determines difference scheme (=1 backward, =0 forward, =0.5
 %   central)
 %
 %   Output:
 %   c:   (vector) [n*1] Approximate solution of c using the FDM
 %   x:   (vector) [n*1] Vector containing the coordinates of c
-%   PeG: (scalar) [-]   Scaler representing the grid Péclet number
+%   PeG: (scalar) [-]   Scalar representing the grid Péclet number
 
 
 %% 1. Generating the grid and calculating parameters:

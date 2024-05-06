@@ -8,21 +8,21 @@ function [c, x, PeG] = ADEstationary(n, Pe, cL, cR)
 % finite difference method of our given problem.
 
 %   Input:
-%   n:  (scaler) number of nodes
-%   Pe: (scaler) Péclet number Pe
-%   cL: (scaler) Boundary condition on the left-side
-%   cR: (scaler) Boundary condotion on the right-side
+%   n:  (scalar) number of nodes
+%   Pe: (scalar) Péclet number Pe
+%   cL: (scalar) Boundary condition on the left-side
+%   cR: (scalar) Boundary condotion on the right-side
 %
 %   Output:
 %   c:   (vector) [n, 1] Approximate solution of c using the FDM
 %   x:   (vector) [n, 1] Vector containing the coordinates of c
-%   PeG: (scaler) [-]   Scaler representing the grid Péclet number
+%   PeG: (scalar) [-]   Scalar representing the grid Péclet number
 
 
 %% 1. Generating the grid and calculating parameters:
 x = linspace(0, 1, n); % Generating the x grid between 0 and 1 using linspace()
 
-dx = 1/n;
+dx = 1/(n-1);
 PeG = Pe * dx;
 
 %% 2. Setting up the system of equations [A]{c} = {rhs}

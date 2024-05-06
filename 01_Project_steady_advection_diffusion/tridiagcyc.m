@@ -10,10 +10,10 @@ function [A] = tridiagcyc(n, u1, h, o1)
 % corner is (u1).
 
 %   Input:
-%   n:  (scaler) Dimension of the matrix
-%   u1: (scaler) Lower first diagonal
-%   h:  (scaler) Main diagonal
-%   o1: (scaler) Upper first diagonal
+%   n:  (scalar) Dimension of the matrix
+%   u1: (scalar) Lower first diagonal
+%   h:  (scalar) Main diagonal
+%   o1: (scalar) Upper first diagonal
 %
 %   Output:
 %   A: (matrix) [n, n] Modified Tri-diagonal matrix, with values in the
