@@ -119,6 +119,6 @@ grid;
 %% 6. Saving our figure as 'convergence2.png': --------------------------- %
 
 disp('Saving the figure as convergence2.png...');
-saveas(fig, 'convergence2.png');
+saveas(fig, 'convergence2_false.png');
 
 disp('Figured saved!');
