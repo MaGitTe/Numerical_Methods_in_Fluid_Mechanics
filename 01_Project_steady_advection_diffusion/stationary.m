@@ -1,4 +1,4 @@
-% Numerical Methods in Fluid Mechanics | SoSe 2024
+%% Numerical Methods in Fluid Mechanics | SoSe 2024
 % Assignment 1:
 % 1D stationary mass transport equation - FDM
 % 
@@ -13,34 +13,37 @@
 close all; % Closing all our current figures
 clear; clc; % Clearing our Workspace and Command Window resp.
 
+%% 1. Setting up Boundary conditions & Grid points
+
 Pe_list = [-10, -2, 0, 2, 10]; % Predefined list of Péclet numbers
 
-%Boundary conditions
-cL = 0;
-cR = 1;
+cL = 0; % Left BC
+cR = 1; % Right BC
 
-% 1.1 Defining the vector `x` and the number of points `n`: ------------- %
 n = 20;
 
-% 1.2 Expressing the analytical solution as an anonymous function: ------ %
+%% 2. Expressing the analytical solution as an anonymous function: ------ %
 f_ana = @(x, Pe) (exp(Pe * x) - 1)/(exp(Pe) - 1);
 
-% 2.3 Plotting the analytical solution and  numerical solution for each Péclet number: --------------------- %
+%% 3. Plotting the analytical solution and  numerical solution for each Péclet number: --------------------- %
 
 fig = figure; % creating a figure to later on save it
 set(fig, 'defaulttextinterpreter', 'latex') % enabling LaTex styling
 
 for i = 1:length(Pe_list)
 
+    subplot(length(Pe_list), 1, i); % Creating a 5*1 subplot, and selecting the i-th one in each iteration
     
-    [c_num, x, PeG]  = ADEstationary(n, Pe_list(i), cL, cR);
-    c_ana = f_ana(x, Pe_list(i)); % calling our anonymous function to evaluate c(x) at each Pe_i
+    % Numerical Solution & Plot (with additional plotting features)
+    [c_num, x, PeG]  = ADEstationary(n, Pe_list(i), cL, cR); % Numerical Solution at each Pe_i
+    plot(x,c_num, 'x', 'color', 'red', 'DisplayName', 'numerical', 'LineWidth', 1.5);
     
-    subplot(length(Pe_list), 1, i)
-    % Plotting c(x), and setting a legend correspoding to the appropriate Péclet number
-    plot(x, c_ana, '--', 'color', 'black', 'DisplayName', 'analytical', 'LineWidth', 1.5);
-    hold on;
-    plot(x,c_num, 'o', 'color', 'red', 'DisplayName', 'numerical', 'LineWidth', 1.5);
+    hold on; 
+
+    % Analytical Solution & Plot (with additional plotting features)
+    c_ana = f_ana(x, Pe_list(i)); % Analytical  Solution at each Pe_i
+    plot(x, c_ana, '--', 'color', 'black', 'DisplayName', 'analytical', 'LineWidth', 1.5); 
+    
 
     % Labeling our axis, adding legends, a title and a grid
     % Using the $ signs for LaTex formatting
@@ -55,4 +58,11 @@ for i = 1:length(Pe_list)
 end
 
 
-saveas(fig, 'numSolution.png')
+%% 4. Saving our figure as 'numSolution.png': --------------------------- %
+
+disp('Saving the figure as numSolution.png...');
+
+saveas(fig, 'numSolution.png');
+
+disp('Figured saved!');
+

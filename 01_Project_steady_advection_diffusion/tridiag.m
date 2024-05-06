@@ -1,5 +1,10 @@
 function [A] = tridiag(n, u1, h, o1)
-% This function creates a matrix A of size [n*n], this matrix will have a
+% Group 1:
+%   - Lokesh Duvvuru, 10063226
+%   - Marie Tersteegen, 10061302
+%   - Younes Abdeldjalil TOUMI, 10064473
+
+% This function creates a matrix A of size [n, n], this matrix will have a
 % main diagonal (h), an upper (o1) and a lower one (u1).
 
 %   Input:
@@ -9,7 +14,7 @@ function [A] = tridiag(n, u1, h, o1)
 %   o1: (scaler) Upper first diagonal
 %
 %   Output:
-%   A: (matrix) [n*n] Tri-diagonal matrix
+%   A: (matrix) [n, n] Tri-diagonal matrix
 
 
 if n < 3
