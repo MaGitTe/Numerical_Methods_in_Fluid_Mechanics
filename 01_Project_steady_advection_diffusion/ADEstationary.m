@@ -3,6 +3,8 @@ function [c, x, PeG] = ADEstationary(n, Pe, cL, cR)
 %   - Lokesh Duvvuru, 10063226
 %   - Marie Tersteegen, 10061302
 %   - Younes Abdeldjalil TOUMI, 10064473
+%
+% Date of submission: 08.05.2024
 
 %% This function calculates the numerical solution for c [n, 1] using the
 % finite difference method of our given problem.

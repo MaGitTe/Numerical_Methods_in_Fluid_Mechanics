@@ -2,10 +2,12 @@
 % Assignment 1:
 % 1D stationary mass transport equation - FDM
 % 
-% Groupe 1:
+% Group 1:
 %   - Lokesh Duvvuru, 10063226
 %   - Marie Tersteegen, 10061302
 %   - Younes Abdeldjalil TOUMI, 10064473
+%
+% Date of submission: 08.05.2024
 
 
 %% PART 5: Convergence Analysis                                              %
@@ -29,7 +31,7 @@ x = [0.25, 0.5, 0.75]; % Our points of interest
 
 e_1 = zeros(1, length(dx_list)-1);
 
-%% 3. Calculate num soltion for dx=0.25
+%% 3. Calculate numerical soltion for coarsest gridsize
 dx = dx_list(1);
 n = 1/dx +1;
 Pe = PeG/dx;
@@ -39,18 +41,18 @@ slicing_index = [0.25/dx + 1  :0.25/dx: n - 0.25/dx];
 c_num_x_i = c_num(slicing_index);
 c_coarse = c_num_x_i;
 
-%% 4. Loop: Calculate error e_1=norm(c_coarse(x_i) - c_num(x_i)) between solutions of adjacent gridscized (compare with more coarse gridsize)
+%% 4. Loop: Calculate error e_1=norm(c_coarse(x_i) - c_num(x_i)) between solutions of adjacent gridsizes (compare with more coarse gridsize)
 for i= 2:(length(dx_list))
     dx = dx_list(i);
     n = 1/dx +1;
     Pe = PeG/dx;
+    
+    [c_num, x_grid, PeG] = ADEstationary(n, Pe,cL,cR); %compute solution for current gridsize
+    slicing_index = [0.25/dx + 1  :0.25/dx: n - 0.25/dx]; %index of c(x_i) with x_i=[0.25,0.5,0.75]
+    c_num_x_i = c_num(slicing_index); %c(x_i)
+    e_1(i-1) = norm(c_coarse - c_num_x_i); %deviation of c(x_i) from adjacent solution with more coarse grid
 
-    [c_num, x_grid, PeG] = ADEstationary(n, Pe,cL,cR);
-    slicing_index = [0.25/dx + 1  :0.25/dx: n - 0.25/dx];
-    c_num_x_i = c_num(slicing_index);
-    e_1(i-1) = norm(c_coarse - c_num_x_i);
-
-    c_coarse = c_num_x_i;
+    c_coarse = c_num_x_i; %set current solution as coarse solution for next loop
 end
 
 %% 5. Plot deviation of adjacent gridsizes against gridsize

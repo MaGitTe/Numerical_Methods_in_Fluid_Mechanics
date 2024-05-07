@@ -2,10 +2,12 @@
 % Assignment 1:
 % 1D stationary mass transport equation - FDM
 % 
-% Groupe 1:
+% Group 1:
 %   - Lokesh Duvvuru, 10063226
 %   - Marie Tersteegen, 10061302
 %   - Younes Abdeldjalil TOUMI, 10064473
+%
+% Date of submission: 08.05.2024
 
 %% PART 4: Stability Analysis                                                %
 % -------------------------------------------------------------------------- %
@@ -24,7 +26,7 @@ n = 11; % number of nodes
 dx = 1/(n-1); % Single grid size
 
 PeG_list = [1, 1.5, 2, 3]; % Predefined list of Grid Péclet numbers
-Pe_list = PeG_list./dx; % List of Péclet numbers
+Pe_list = PeG_list/dx; % List of Péclet numbers
 
 alpha_list = [0, 0.5, 1]; % [0: forward, 0.5: central, 1: backward]
 

@@ -6,6 +6,8 @@
 %   - Lokesh Duvvuru, 10063226
 %   - Marie Tersteegen, 10061302
 %   - Younes Abdeldjalil TOUMI, 10064473
+%
+% Date of submission: 08.05.2024
 
 
 %% PART 1: Analytical solution of the 1D mass transport equation           %
