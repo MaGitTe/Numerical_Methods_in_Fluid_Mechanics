@@ -2,10 +2,12 @@
 % Assignment 1:
 % 1D stationary mass transport equation - FDM
 % 
-% Groupe 1:
+% Group 1:
 %   - Lokesh Duvvuru, 10063226
 %   - Marie Tersteegen, 10061302
 %   - Younes Abdeldjalil TOUMI, 10064473
+%
+% Date of submission: 08.05.2024
 
 %% PART 2: Analytical & Numerical solution of the 1D mass transport equation %
 % -------------------------------------------------------------------------- %

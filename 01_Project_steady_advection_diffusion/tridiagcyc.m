@@ -3,6 +3,8 @@ function [A] = tridiagcyc(n, u1, h, o1)
 %   - Lokesh Duvvuru, 10063226
 %   - Marie Tersteegen, 10061302
 %   - Younes Abdeldjalil TOUMI, 10064473
+%
+% Date of submission: 08.05.2024
 
 % This function creates a matrix A of size [n, n], this matrix will have a
 % main diagonal, an upper first diagonal and a lower first one.

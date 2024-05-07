@@ -3,6 +3,8 @@ function [A] = tridiag(n, u1, h, o1)
 %   - Lokesh Duvvuru, 10063226
 %   - Marie Tersteegen, 10061302
 %   - Younes Abdeldjalil TOUMI, 10064473
+%
+% Date of submission: 08.05.2024
 
 % This function creates a matrix A of size [n, n], this matrix will have a
 % main diagonal (h), an upper (o1) and a lower one (u1).
