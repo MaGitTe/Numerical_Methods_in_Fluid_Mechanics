@@ -28,12 +28,13 @@ L_c = 0.5;
 dx = 1/(n-1);
 
 %time discretization
-Nt = 30;
+Nt = 3;
 dt = 1;
 
 % model Parameters
 CFL = 0.5;
 Ne = 0.1;
+
 
 v = CFL*dx/dt;
 D = Ne*dx^2/dt;
@@ -53,4 +54,4 @@ hold on;
 
 % calculate analytical solution for c
 c_ana = transient_ana(x, tend, c_ini, w, L_c, v, D);
-plot(x,c_ana)
+plot(x, c_ana)

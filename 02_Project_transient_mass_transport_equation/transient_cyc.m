@@ -36,7 +36,7 @@ Pb = tridiagcyc(nx,-1,1,0);
 Pf = tridiagcyc(nx,0,-1,1);
 I = eye(nx);
 Al = I - theta*(Ne*K - CFL*(alpha*Pb + (1-alpha)*Pf));
-Ar = (1-theta)*(Ne*K - CFL*(alpha*Pb + (1-alpha)*Pf)) - I;
+Ar = (1-theta)*(Ne*K - CFL*(alpha*Pb + (1-alpha)*Pf)) + I;
 
 if theta > 0 % only inverse Al if needed (implicit and Cranck-Nicolson scheme)
     Al_inv = 1\Al;
