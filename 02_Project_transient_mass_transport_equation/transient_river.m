@@ -10,16 +10,17 @@
 %
 % Date of submission: 05.06.2024
 
-%% Analytical & Numerical solution of advection-dispersion equation%
+%% Analytical & Numerical solution of advection-dispersion equation          %
 % -------------------------------------------------------------------------- %
 
 close all; % Closing all our current figures
 clear; clc; % Clearing our Workspace and Command Window resp.
 
 % parameter for analytical solution
-cini = 1;
+c_ini = 1;
 w = 0.5;
-lc = 0.5;
+L_c = 0.5;
+
 
 % generate initial condition and grid
 [n x c0] = init(2);
@@ -51,5 +52,5 @@ Nplot = Nt;
 hold on;
 
 % calculate analytical solution for c
-%c_ana = transient_ana()
-%plot(x,c_ana)
+c_ana = transient_ana(x, tend, c_ini, w, L_c, v, D);
+plot(x,c_ana)
