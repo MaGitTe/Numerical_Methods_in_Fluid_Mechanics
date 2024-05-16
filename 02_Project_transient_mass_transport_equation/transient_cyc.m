@@ -39,7 +39,7 @@ Al = I - theta*(Ne*K - CFL*(alpha*Pb + (1-alpha)*Pf));
 Ar = (1-theta)*(Ne*K - CFL*(alpha*Pb + (1-alpha)*Pf)) + I;
 
 if theta > 0 % only inverse Al if needed (implicit and Cranck-Nicolson scheme)
-    Al_inv = 1\Al;
+    Al_inv = inv(Al);
 end
 
 n = 0; %timestep
@@ -55,9 +55,11 @@ while n < Nt % break condition
    
     
     %Show c_n at every Nplot'th timestep
-    if mod(Nplot+n,Nplot)
+    disp(mod(Nplot+n,Nplot));
+    if mod(Nplot+n,Nplot) == 0
         t = n*dt;
-        plot(x,c, 'x', 'DisplayName', ['t = ' num2str(t)], 'LineWidth', 1.5);
+        plot(x,c, 'x--', 'DisplayName', ['t = ' num2str(t)], 'LineWidth', 1.5);
+        hold on
     end
 
     n = n + 1; %next timestep
