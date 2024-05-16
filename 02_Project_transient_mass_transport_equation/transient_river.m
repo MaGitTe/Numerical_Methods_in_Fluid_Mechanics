@@ -33,8 +33,7 @@ dt = 1;
 
 % model Parameters
 CFL = 0.5;
-Ne = 0.1;
-
+Ne = 0.0;
 
 v = CFL*dx/dt;
 D = Ne*dx^2/dt;
@@ -48,10 +47,10 @@ theta = 1;
 
 fig = figure;
 % compute c numerically for Nt timesteps
-Nplot = Nt;
+Nplot = 2;
 [c, tend] = transient_cyc(c0,x,dt,CFL,Ne,Nt,alpha,theta,Nplot);
 hold on;
 
-% calculate analytical solution for c
+
 c_ana = transient_ana(x, tend, c_ini, w, L_c, v, D);
 plot(x, c_ana)
