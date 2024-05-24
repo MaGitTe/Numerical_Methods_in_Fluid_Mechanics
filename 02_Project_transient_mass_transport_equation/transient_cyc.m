@@ -20,8 +20,8 @@ function [c, tend] = transient_cyc(c0, x, dt, CFL, Ne, Nt, alpha, theta, Nplot)
 %   alpha: (scalar) Parameter defining the spatial discretization (forward,
 %   backwards, central)
 %
-%   theta: (scalar) Parameter dening the time discretization (explicit,
-%   implicit, crank-nicolson)
+%   theta: (scalar) Parameter dening the time discretization (explicit = 0,
+%   implicit = 1, crank-nicolson = 0.5)
 %   Nplot: (scalar) plotting interval
 
 %   Output:
@@ -65,8 +65,9 @@ while n < Nt % break condition
     n = n + 1; %next timestep
     
 end
-tend = Nt*dt;
+tend = Nt*dt; %time after last timestep
 
+%plot attributes
 xlabel('$x$');
 ylabel('$c$');
 legend('Location', 'bestoutside');
