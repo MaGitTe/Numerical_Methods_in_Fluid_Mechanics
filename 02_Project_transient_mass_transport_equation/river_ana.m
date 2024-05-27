@@ -10,15 +10,12 @@
 %
 % Date of submission: 05.06.2024
 
-%% PART 1: Analytical Solution                                               %
+%% PART 1: Analytical Solution of advection-dispersion equation              %
 % -------------------------------------------------------------------------- %
 
 close all; % Closing all our current figures
 clear; clc; % Clearing our Workspace and Command Window resp.
 
-% Defining lists that will be later on used for plotting
-legend_list = ["t = ", "Central", "Backward"];
-color_list = ["red", "blue", "green"];
 
 %% 1. Defining the parameters & variables: -------------------------------
 
@@ -29,7 +26,7 @@ L_r = 2000; % [m] total lenght of river
 
 % 1.2 Flow Parameters
 v = 0.1; % [m/s] mean flow velocity
-D = 0.01; % [0.01 m^2/s] dispersion coefficient
+D = 0.01; % [m^2/s] dispersion coefficient
 c_ini = 1; % [kg/m^3] initial concentration of the solute
 
 % 1.3 Scheme Parameters & variables
@@ -52,8 +49,8 @@ for time = t
     % Labeling our axis, adding legends, a title and a grid
     % Using the $ signs for LaTex formatting
 
-    xlabel('$x$ [-]');
-    ylabel('$c(x, t)$ [-]');
+    xlabel('$x [m]$');
+    ylabel('$c(x, t) [mg/m^3] $');
     legend('Location', 'bestoutside');
     title('Analytical solution for different times t');
     grid;

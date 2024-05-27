@@ -10,8 +10,8 @@ function [c, tend] = transient_cyc(c0, x, dt, CFL, Ne, Nt, alpha, theta, Nplot)
 % equation with periodical Boundary conditions.
 
 %   Input:
-%   c0:  (vector) [nx, 1] Vector containing initial condition    
-%   x:   (vector)  [nx, 1] Vector containing the coordinates of c
+%   c0:  (vector) [1, nx] Vector containing initial condition    
+%   x:   (vector)  [1, nx] Vector containing the coordinates of c
 %   dt:  (scalar) Time step size
 %   CFL: (scalar) Courant number
 %   Ne:  (scalar) Neumann number
@@ -29,47 +29,58 @@ function [c, tend] = transient_cyc(c0, x, dt, CFL, Ne, Nt, alpha, theta, Nplot)
 %   tend: (scalar) Time of the last time step
 
 
+%% 1. Setting up the system of equations
+nx = length(c0); % Extracting the size of the initial condition c0
 
-nx = length(c0); %number of nodes
-K = tridiagcyc(nx,1,-2,1);
-Pb = tridiagcyc(nx,-1,1,0);
-Pf = tridiagcyc(nx,0,-1,1);
+K = tridiagcyc(nx, 1, -2, 1);
+Pb = tridiagcyc(nx, -1, 1, 0);
+Pf = tridiagcyc(nx, 0, -1, 1);
 I = eye(nx);
+
 Al = I - theta*(Ne*K - CFL*(alpha*Pb + (1-alpha)*Pf));
 Ar = (1-theta)*(Ne*K - CFL*(alpha*Pb + (1-alpha)*Pf)) + I;
 
-if theta > 0 % only inverse Al if needed (implicit and Cranck-Nicolson scheme)
-    Al_inv = inv(Al);
-end
 
-n = 0; %timestep
-c = c0;
+%% 2. Calculating c for each time step `n`
+c = c0; % Initial concentration (@ n = 0)
+n = 1;  % Initial time-step NOTE: To save last plot only: n = 1
 
-while n < Nt % break condition
-    % calculate c for n'th timestep
-    if theta > 0 %implicit and Cranck-Nicolson scheme
+while n <= Nt % break condition
+    % Plotting the c at n every other `Nplot-plot
+    % If Nplot == 3, the plot of every 3 time step will be shown only.
+    if mod(n, Nplot) == 0
+        t = n*dt; % Used for the legend
+        
+        plot(x, c, '*--', 'color', 'red', 'DisplayName', ['Numerical @ t = ' num2str(t) ' [s]'], 'LineWidth', 1.0);
+        title(['CFL=' num2str(CFL) ' and Ne=' num2str(Ne)])
+        hold on;
+    end
+    
+    % Calculating c for each n-time-step
+    if theta > 0
+        % Inversing Al only when having theta == 0.5 or 1.0
+        % i.e. for Implicit & Crank-nicolson scheme only.
+        Al_inv = inv(Al);
         c = Al_inv * Ar * c;
-    else %explicit
+
+    else
+        % Explicit time scheme (theta = 0)
         c = Ar * c;
     end
    
-    
-    %Show c_n at every Nplot'th timestep
-    disp(mod(Nplot+n,Nplot));
-    if mod(Nplot+n,Nplot) == 0
-        t = n*dt;
-        plot(x,c, 'x--', 'DisplayName', ['t = ' num2str(t)], 'LineWidth', 1.5);
-        hold on
-    end
-
-    n = n + 1; %next timestep
+    n = n + 1; % Incrementing our time step
     
 end
-tend = Nt*dt;
 
-xlabel('$x$');
-ylabel('$c$');
-legend('Location', 'bestoutside');
+tend = Nt*dt; % Computing the final time point
+
+
+% Labeling our axis, adding legends, a title and a grid for each plot and
+% Using the $ signs for LaTex formatting
+
+xlabel('x [m]');
+ylabel('c [mg/m^3] ');
+% legend('Location', 'bestoutside');
 grid;
 
 end
