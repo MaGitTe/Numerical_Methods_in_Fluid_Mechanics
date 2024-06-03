@@ -30,29 +30,32 @@ Nt = 30; % Total number of time points
 dx = 1/(n-1); % Space discretization
 dt = 1; % Time discretization
 
-theta = 0; % Explicit time-descritization Scheme
-alpha = 1; % Backwards Scheme
+theta = 1.0; %  time-descritization Scheme
+alpha = 1.0; % Space Scheme
 
 
 %% 2. Solving our problem both numerically and analytically
 fig = figure('Position', [200 100 1000 600]); % creating a figure to later on save it
+set(fig, 'defaulttextinterpreter', 'latex') % enabling LaTex styling
 Nplot = Nt;
 k = 1;
 
 
 % Looping over alpha
-for i = 1:length(Ne_list)
-    Ne = Ne_list(i);
+for j = 1:length(CFL_list)
+    CFL = CFL_list(j);
 
-    % Looping over CFL
-    for j = 1:length(CFL_list)
-        CFL = CFL_list(j);
+    for i = 1:length(Ne_list)
+        Ne = Ne_list(i);
 
         subplot(3, 3, k); % Creating a 3*3 subplot, and selecting the k-th one in each iteration
         
+
         % Numerical Solution c for Nt timesteps
         [c, tend] = transient_cyc(c0, x, dt, CFL, Ne, Nt, alpha, theta, Nplot);
         k = k+1;
+       
+        title(['CFL=' num2str(CFL) ' and Ne=' num2str(Ne)])
 
     end
 

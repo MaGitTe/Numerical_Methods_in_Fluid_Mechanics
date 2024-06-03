@@ -45,14 +45,18 @@ Ar = (1-theta)*(Ne*K - CFL*(alpha*Pb + (1-alpha)*Pf)) + I;
 c = c0; % Initial concentration (@ n = 0)
 n = 1;  % Initial time-step NOTE: To save last plot only: n = 1
 
+
+
 while n <= Nt % break condition
     % Plotting the c at n every other `Nplot-plot
     % If Nplot == 3, the plot of every 3 time step will be shown only.
     if mod(n, Nplot) == 0
         t = n*dt; % Used for the legend
         
-        plot(x, c, '*--', 'color', 'red', 'DisplayName', ['Numerical @ t = ' num2str(t) ' [s]'], 'LineWidth', 1.0);
-        title(['CFL=' num2str(CFL) ' and Ne=' num2str(Ne)])
+        plot(x, c, '--', 'color', 'red', 'DisplayName', ['Numerical @ t = ' num2str(t) ' [s]'], 'LineWidth', 1.0);
+        
+       
+        
         hold on;
     end
     
@@ -77,7 +81,7 @@ tend = Nt*dt; %time after last timestep
 %plot attributes
 xlabel('$x$');
 ylabel('$c$');
-legend('Location', 'bestoutside');
+% legend('Location', 'bestoutside');
 grid;
 
 end
