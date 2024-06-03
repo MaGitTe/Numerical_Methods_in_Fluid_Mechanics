@@ -44,7 +44,7 @@ for time = t
     
     [c_ana] = transient_ana(x, time, c_ini, w, L_c, v, D);
     
-    plot(x, c_ana, 'x--', 'DisplayName', ['t = ' num2str(time) ' [s]'], 'LineWidth', 1.5)
+    plot(x, c_ana, '-', 'DisplayName', ['t = ' num2str(time) ' [s]'], 'LineWidth', 1.5)
     hold on;
     % Labeling our axis, adding legends, a title and a grid
     % Using the $ signs for LaTex formatting

@@ -35,22 +35,24 @@ alpha_list = [0, 0.5, 1]; % Spacial-Schemes
 
 %% 2. Solving our problem both numerically and analytically
 fig = figure('Position', [200 100 1000 600]); % creating a figure to later on save it
+set(fig, 'defaulttextinterpreter', 'latex') % enabling LaTex styling
 Nplot = Nt;
 k = 1;
 
+% Looping over CFL
+for i = 1:length(CFL_list)
+    CFL = CFL_list(i);
+    % Looping over alpha
+    for j = 1:length(alpha_list)
+        alpha = alpha_list(j);
 
-% Looping over alpha
-for j = 1:length(alpha_list)
-    alpha = alpha_list(j);
 
-    % Looping over CFL
-    for i = 1:length(CFL_list)
-        CFL = CFL_list(i);
 
          subplot(3, 3, k); % Creating a 3*3 subplot, and selecting the k-th one in each iteration
         
         % Numerical Solution c for Nt timesteps
         [c, tend] = transient_cyc(c0, x, dt, CFL, Ne, Nt, alpha, theta, Nplot);
+        title(['CFL=' num2str(CFL) ' and alpha=' num2str(alpha)])
 
         k = k+1;
 

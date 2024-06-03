@@ -28,7 +28,7 @@ L_c = 0.5; % [m] center of the solute
 % 1.2 Numerical-solution-related parameters
 [n, x, c0] = init(2); % Provided (on Stud.IP)
 
-Nt = 3; % Total number of time points
+Nt = 30; % Total number of time points
 
 dx = 1/(n-1); % Space discretization
 dt = 1; % Time discretization
@@ -43,6 +43,7 @@ D = Ne*dx^2/dt; % [m^2/s] Dispersion
 
 %% 2. Solving our problem both numerically and analytically
 fig = figure; % creating a figure to later on save it
+set(fig, 'defaulttextinterpreter', 'latex') % enabling LaTex styling
 Nplot = Nt;
 
 % Numerical Solution c for Nt timesteps
@@ -53,11 +54,12 @@ c_ana = transient_ana(x, tend, c_ini, w, L_c, v, D);
 
 
 plot(x, c_ana, '-', 'Color', 'black', 'DisplayName', ['Analytical @ t = ' num2str(tend) ' [s]'], 'LineWidth', 1.5);
-title(['Analytical solution vs Numerical solution - Having Nt = ' num2str(Nt)] )
+title(['Analytical solution vs Numerical solution, Nt = ' num2str(Nt)] )
+legend('Location', 'bestoutside');
 
 %% 3. Saving our figure as 'transientNt3.png' when needed: --------------------------- %
 
-% disp('Saving the figure as transientNt3.png...');
-% saveas(fig, 'transientNt3.png');
+disp('Saving the figure as transientNt30.png...');
+saveas(fig, 'transientNt30.png');
 
-% disp('Figured saved!');
+disp('Figured saved!');
