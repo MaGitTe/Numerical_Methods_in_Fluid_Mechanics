@@ -12,4 +12,3 @@ lambda(x<b1 | x>=b3) = air;
 lambda(x>=b1 & x<b2) = brick;
 lambda(x>=b2 & x<b3) = insulation;
 end
-end
