@@ -1,14 +1,33 @@
 function [lambda] = f_lambda2(x)
-%UNTITLED2 Summary of this function goes here
-%   Detailed explanation goes here
-air = 0.026;
-brick = 1;
-insulation = 0.05;
+
+% Group 1
+%   - Lokesh Duvvuru, 10063226
+%   - Marie Tersteegen, 10061302
+%   - Younes Abdeldjalil TOUMI, 10064473
+%
+% Date of submission: 19.06.2024
+
+% This function aims to generate the lambda [N, 1] vector containing the 
+% heat conductivity λ at different values of x. For the second case.
+
+%   Input:
+%   x:   (vector) [N, 1] Vector of values ranging from 0 to L
+%
+%   Output:
+%   rho:   (vector) [N, 1] Vector containing the heat conductivity λ at x.
+
+lambda_air = 0.026;
+lambda_brick = 1;
+lambda_insulation = 0.05;
+
 b1 = 0.1;
 b2 = 0.5;
 b3 = 0.7;
+
 lambda = zeros(length(x),1);
-lambda(x<b1 | x>=b3) = air;
-lambda(x>=b1 & x<b2) = brick;
-lambda(x>=b2 & x<b3) = insulation;
+
+lambda(x < b1 | x >= b3) = lambda_air;
+lambda(x >= b1 & x < b2) = lambda_brick;
+lambda(x >= b2 & x < b3) = lambda_insulation;
+
 end
