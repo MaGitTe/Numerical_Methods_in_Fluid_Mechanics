@@ -18,28 +18,68 @@ clear; clc; % Clearing our Workspace and Command Window resp.
 L = 0.8; % [m] Total length
 N = 80; % Descritizing into 80 Elements
 
-T_inside = 25; % Temperature Inside [°C]
-T_outisde = 5; % Temperature Outside [°C]
-
 % Building the A_T and A_P matrices for the first case:
-A1_T = matrix(f_rho1, L, N);
-A1_P = matrix(f_mue1, L, N);
+[A1_T, x] = matrix(@f_rho1, L, N);
+[A1_P, x] = matrix(@f_mue1, L, N);
+
+[A2_T, x] = matrix(@f_rho2, L, N);
+[A2_P, x] = matrix(@f_mue2, L, N);
 
 
-
-
-%% PART 2: Calculating temperature and pressure distribution               %
-% ------------------------------------------------------------------------ %
-T_rhs = 
-P_rhs = 
-
-
-
-%% PART 3: Calculating p_sat and phi along the domain                      %
+%% PART 2: Boundary conditions                                         %
 % ------------------------------------------------------------------------ %
 
+T_inside = 25 + 273.15; % Temperature Inside [°K]
+T_outside = 5 + 273.15; % Temperature Outside [°K]
+
+phi_inside = 0.6;
+phi_outside = 0.4;
+
+p_sat_inside = 288.68 * (1.098 + (T_inside - 273.15)/100)^8.02;
+p_sat_outside = 288.68 * (1.098 + (T_outside - 273.15)/100)^8.02;
+
+P_inside = phi_inside * p_sat_inside;
+P_outside = phi_outside * p_sat_outside;
+
+T_rhs = zeros(N+2, 1);
+P_rhs = zeros(N+2, 1);
+
+T_rhs(1) = T_inside;
+T_rhs(end) = T_outside;
+
+P_rhs(1) = P_inside;
+P_rhs(end) = P_outside;
+
+%% PART 3: Calculating temperature and pressure distribution               %
+% ------------------------------------------------------------------------ %
+
+T1 = inv(A1_T) * T_rhs;
+P1 = inv(A1_P) * P_rhs;
+
+T2 = inv(A2_T) * T_rhs;
+P2 = inv(A2_P) * P_rhs;
+
+
+p_sat_func = @(T) 288.68 * (1.098 + (T-273.15)./100).^8.02;
+phi_func = @(T, P) P ./ p_sat_func(T);
+
+
+p_sat1 = p_sat_func(T1);
+phi1 = phi_func(T1, P1);
+
+
+p_sat2 = p_sat_func(T2);
+phi2 = phi_func(T2, P2);
+
+plot(x, phi1);
+hold on
+plot(x, phi2)
+
+%% PART 4: Calculating p_sat and phi along the domain                      %
+% ------------------------------------------------------------------------ %
 
 
 
-%% PART 4: Displaying the results                                          %
+
+%% PART 5: Displaying the results                                          %
 % ------------------------------------------------------------------------ %

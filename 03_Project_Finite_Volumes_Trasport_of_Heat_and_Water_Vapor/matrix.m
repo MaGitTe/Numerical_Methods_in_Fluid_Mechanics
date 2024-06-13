@@ -32,7 +32,7 @@ x = [0; linspace(dx/2, L-dx/2, N)';  L]; % Here 0 and L represent the boundary n
 
 %% --- Defining the vector of parameters (lambda / rho / mu) --- %%                                    
 
-p_arr = f(x); % here p_array stands for `parameter array`, being either an array of lambda, rho or mu.
+p_arr = f(x); % here p_array stands for `parameter array`, being either an array of lambda, or mu.
 
 
 p_arr_inter = 1/2 *(p_arr(1: end-1) + p_arr(2: end)); % Stands for `parameters at interface` here using the arithmetical interpolation
