@@ -55,7 +55,6 @@ lower_diag = [p_arr_inter(1:end-1); 0]; % Represents the interface with indices 
 upper_diag = [0; p_arr_inter(2:end)]; % Represents the interface with indices `i+1/2`
 
 
-
 %% --- Adapting the diagonals for our specific problem --- %%
 
 % Adjusting the second and before last element of the diagonal, due to the boundaries.
