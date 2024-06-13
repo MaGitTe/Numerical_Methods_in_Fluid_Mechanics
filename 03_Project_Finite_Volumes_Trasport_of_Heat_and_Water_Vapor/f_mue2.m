@@ -1,4 +1,5 @@
 function [inv_mue] = f_mue2(x)
+
 % Group 1
 %   - Lokesh Duvvuru, 10063226
 %   - Marie Tersteegen, 10061302

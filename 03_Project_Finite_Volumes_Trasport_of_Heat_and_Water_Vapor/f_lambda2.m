@@ -1,4 +1,5 @@
 function [lambda] = f_lambda2(x)
+
 % Group 1
 %   - Lokesh Duvvuru, 10063226
 %   - Marie Tersteegen, 10061302
@@ -28,4 +29,5 @@ lambda = zeros(length(x),1);
 lambda(x < b1 | x >= b3) = lambda_air;
 lambda(x >= b1 & x < b2) = lambda_brick;
 lambda(x >= b2 & x < b3) = lambda_insulation;
+
 end
