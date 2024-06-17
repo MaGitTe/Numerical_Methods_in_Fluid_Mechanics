@@ -82,20 +82,20 @@ set(fig1, 'defaulttextinterpreter', 'latex') % enabling LaTex styling
 %Temperature
 subplot(3,1,1);
 plot(x,T1);
-xlabel('$\Delta x$ [m]');
+xlabel('$x$ [m]');
 ylabel('$T$ [K]');
 
 %p_sat
 subplot(3,1,2);
 plot(x, p_sat1)
-xlabel('$\Delta x$ [m]');
+xlabel('$x$ [m]');
 ylabel('$p_{sat}$ [Pa]');
 
 %phi
 subplot(3,1,3);
 plot(x,phi1)
 yr = yregion(1,1.2, FaceColor="red", DisplayName='precipation'); %highlight area of percipation (phi>=1)
-xlabel('$\Delta x$ [m]');
+xlabel('$x$ [m]');
 ylabel('$\phi$ [-]');
 legend(yr);
 
@@ -113,7 +113,7 @@ set(fig2, 'defaulttextinterpreter', 'latex') % enabling LaTex styling
 %Temperature
 subplot(3,1,1);
 plot(x,T2);
-xlabel('$\Delta x$ [m]');
+xlabel('$x$ [m]');
 ylabel('$T$ [K]');
 
 %p_sat
@@ -126,7 +126,7 @@ ylabel('$p_{sat}$ [Pa]');
 subplot(3,1,3);
 plot(x,phi2)
 yr = yregion(1,1.2, FaceColor="red", DisplayName='precipation');  %highlight area of percipation (phi>=1)
-xlabel('$\Delta x$ [m]');
+xlabel('$x$ [m]');
 ylabel('$\phi$ [-]');
 legend(yr);
 

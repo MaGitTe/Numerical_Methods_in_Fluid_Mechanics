@@ -77,4 +77,3 @@ A = diag(main_diag) + diag(lower_diag, -1) + diag(upper_diag, 1);
 
 
 end
-
