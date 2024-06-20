@@ -1,5 +1,4 @@
 function [lambda] = f_lambda2(x)
-
 % Group 1
 %   - Lokesh Duvvuru, 10063226
 %   - Marie Tersteegen, 10061302

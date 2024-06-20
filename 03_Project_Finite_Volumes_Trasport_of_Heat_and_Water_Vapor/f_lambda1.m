@@ -6,9 +6,6 @@ function [lambda] = f_lambda1(x)
 %
 % Date of submission: 19.06.2024
 
-%F_LAMBDA1 this function yields the lambda at every point x in case 1
-
-
 % This function aims to generate the lambda [N, 1] vector containing the 
 % heat conductivity λ at different values of x. For the first case.
 

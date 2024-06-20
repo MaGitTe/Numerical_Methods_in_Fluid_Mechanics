@@ -44,7 +44,7 @@ p_2_minus_half = p_arr_inter(1);
 p_2_plus_half = p_arr_inter(2);
 
 % Extracting the last and before last interface (for better clarity when adapting the main diagonal)      
-p_end_minus_half = p_arr_inter(end);
+p_end_minus_half = p_arr_inter(end-1);
 p_end_plus_half = p_arr_inter(end);
 
 

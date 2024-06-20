@@ -76,25 +76,26 @@ phi2 = phi_func(T2, P2);
 %% PART 5: Plotting distributions of T, p_sat and phi over domain for case 1 and case 2          %
 % ------------------------------------------------------------------------ %
 
-%case 1
-fig1 = figure
+% 5.1. Case n°1: ----- %
+fig1 = figure;
 set(fig1, 'defaulttextinterpreter', 'latex') % enabling LaTex styling
-%Temperature
+
+% 5.1.1 Temperature
 subplot(3,1,1);
 plot(x,T1);
 xlabel('$x$ [m]');
 ylabel('$T$ [K]');
 
-%p_sat
+% 5.1.2 Saturated pressure
 subplot(3,1,2);
 plot(x, p_sat1)
 xlabel('$x$ [m]');
 ylabel('$p_{sat}$ [Pa]');
 
-%phi
+% 5.1.3 Humidity
 subplot(3,1,3);
-plot(x,phi1)
-yr = yregion(1,1.2, FaceColor="red", DisplayName='precipation'); %highlight area of percipation (phi>=1)
+plot(x, phi1)
+yr = yregion(1,1.2, FaceColor="red", DisplayName='precipation'); % Highlight area of percipation (phi>=1)
 xlabel('$x$ [m]');
 ylabel('$\phi$ [-]');
 legend(yr);
@@ -106,23 +107,23 @@ saveas(fig1, 'case1.png');
 
 disp('Figure saved!');
 
-%case 2
-fig2 = figure
+% 5.2. Case n°2: ----- %
+fig2 = figure;
 set(fig2, 'defaulttextinterpreter', 'latex') % enabling LaTex styling
 
-%Temperature
+% 5.2.1 Temperature
 subplot(3,1,1);
 plot(x,T2);
 xlabel('$x$ [m]');
 ylabel('$T$ [K]');
 
-%p_sat
+% 5.2.2 Saturated pressure
 subplot(3,1,2);
 plot(x, p_sat2)
 xlabel('$\Delta x$ [m]');
 ylabel('$p_{sat}$ [Pa]');
 
-%phi
+% 5.2.3 Humidity
 subplot(3,1,3);
 plot(x,phi2)
 yr = yregion(1,1.2, FaceColor="red", DisplayName='precipation');  %highlight area of percipation (phi>=1)
@@ -136,14 +137,3 @@ disp('Saving the figure as case2.png...');
 saveas(fig2, 'case2.png');
 
 disp('Figure saved!');
-
-
-
-%% PART 4: Calculating p_sat and phi along the domain                      %
-% ------------------------------------------------------------------------ %
-
-
-
-
-%% PART 5: Displaying the results                                          %
-% ------------------------------------------------------------------------ %

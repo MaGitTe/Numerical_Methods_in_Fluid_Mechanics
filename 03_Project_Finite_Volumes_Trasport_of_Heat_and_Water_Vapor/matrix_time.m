@@ -1,4 +1,4 @@
-function [A, x] = matrix_time(f1,frho, L, N, dt, cp)
+function [A, x] = matrix_time(f1, frho, L, N, dt, cp)
 % Group 1
 %   - Lokesh Duvvuru, 10063226
 %   - Marie Tersteegen, 10061302
@@ -6,10 +6,8 @@ function [A, x] = matrix_time(f1,frho, L, N, dt, cp)
 %
 % Date of submission: 19.06.2024
 
-% This function aims to generate the A [N+2, N+2] matrix used to solve either
-% the heat transport or the water vapor transport depending on the choosen
-% `f` input.
-
+% This function aims to generate the A [N+2, N+2] matrix used to solve
+% transient heat transport.
 
 %   Input:
 %   f1:  (@function) Function used to call previously defined functions
@@ -27,8 +25,7 @@ function [A, x] = matrix_time(f1,frho, L, N, dt, cp)
 
 dx = L/N; % Correspoonds to the length of one CV
 x = [0; linspace(dx/2, L-dx/2, N)';  L]; % Here 0 and L represent the boundary nodes,
-                                         % And ` linspace(dx/2, L-dx/2, N)' ` correspondes to the mid point of each control volume.
-
+                                           % And ` linspace(dx/2, L-dx/2, N)' ` correspondes to the mid point of each control volume.
 
 
 %% --- Defining the vector of parameters (lambda, mu) --- %%                                    
@@ -37,7 +34,7 @@ p_arr1 = f1(x); % here p_array stands for `parameter array`, being either an arr
 
 
 p_arr_inter1 = 1/2 *(p_arr1(1: end-1) + p_arr1(2: end)); % Stands for `parameters at interface` here using the arithmetical interpolation
-                                                      % p_interface_harmonic = 2 *(1./p_arr(1: end-1) + 1./p_arr(2: end)).^(-1);
+                                                         % p_interface_harmonic = 2 *(1./p_arr(1: end-1) + 1./p_arr(2: end)).^(-1);
 
 
 % Extracting the 1st and 2nd interface (for better clarity when adapting the main diagonal)                                                      
@@ -45,54 +42,36 @@ p_2_minus_half = p_arr_inter1(1);
 p_2_plus_half = p_arr_inter1(2);
 
 % Extracting the last and before last interface (for better clarity when adapting the main diagonal)      
-p_end_minus_half = p_arr_inter1(end);
+p_end_minus_half = p_arr_inter1(end-1);
 p_end_plus_half = p_arr_inter1(end);
 
 %% --- Defining the vector of parameters (rho) --- %%                                    
-
 rho = frho(x); % array rho_i.
-rho_inv = 1 ./rho; %array 1/rho_i
 
-%% --- Defining the main, upper and lower diagonal of `A` without the boundaries--- %%
-
-main_diag = [0;-(p_arr_inter1(1:end-1) + p_arr_inter1(2:end));0]; % Represents the interface with indices ` -(i-1/2 + i+1/2) `
-lower_diag = [p_arr_inter1(1:end-1);0]; % Represents the interface with indices `i-1/2`
-upper_diag = [0;p_arr_inter1(2:end)]; % Represents the interface with indices `i+1/2`
-
+%% --- Defining the main, upper and lower diagonal of `A` without the boundaries --- %%
+main_diag  = [0; (p_arr_inter1(1:end-1) + p_arr_inter1(2:end)); 0]; % Represents the interface with indices ` -(i-1/2 + i+1/2) `
+lower_diag = [-p_arr_inter1(1:end-1);                            0]; % Represents the interface with indices `i-1/2`
+upper_diag = [0;                              -p_arr_inter1(2:end)]; % Represents the interface with indices `i+1/2`
 
 %% --- Adapting the diagonals for our specific problem --- %%
 
 % Adjusting the second and before last element of the diagonal, due to the boundaries.
-main_diag(2) = -(p_2_plus_half + 2*p_2_minus_half);
-main_diag(end-1) = -(p_end_minus_half + 2*p_end_plus_half);
-
+main_diag(2)     = 2*p_2_minus_half + p_2_plus_half;
+main_diag(end-1) = p_end_minus_half + 2*p_end_plus_half;
 
 % Adapting the lower diagonal
-lower_diag(1) = 2*lower_diag(1);
-
+lower_diag(1) =   2 * lower_diag(1);
 
 % Adapting the upper diagonal
-upper_diag(end) = 2*upper_diag(end);
+upper_diag(end) = 2 * upper_diag(end);
 
 
+%% --- Building the system matrix `A` and multiplying with a prefactor --- %%
 
-%% --- Building the system matrix `A` --- %%
+A = diag( dt./(rho.*cp*dx^2) .* main_diag + 1) + diag(dt./(rho(1:end-1).*cp*dx^2) .* lower_diag, -1) + diag(dt./(rho(2:end).*cp*dx^2) .* upper_diag, 1);
 
-A = (diag(main_diag) + diag(lower_diag, -1) + diag(upper_diag, 1));
-
-
-%inserting rho and prefactor and adding 1 to diagonal
-
-A = A.*rho_inv;
-
-prefactor = -dt/(cp* dx^2);
-A = A.*prefactor;
-A = A + eye(N+2);
-disp(A)
-
-
-
-
+A(1) = 1;
+A(end) = 1;
 
 
 end
