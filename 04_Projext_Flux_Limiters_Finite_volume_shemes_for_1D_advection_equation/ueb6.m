@@ -5,9 +5,9 @@ close all; % Closing all our current figures
 clear; clc; % Clearing our Workspace and Command Window resp.
 
 %% 1. Defining the parameters for our calculations
-% 1.1 Model/Flow parameters
+% 1.1 Model/Flow parameters % Instabil for CFL > 1
 CFL = 0.5; % Courant-Number
-Ne = 0.1; % Neumann-Number
+Ne = 0.0; % Neumann-Number
 
 w = 0.5; % [m] width of the solute
 c_ini = 1; % [kg/m^3] initial concentration of the solute
@@ -37,16 +37,16 @@ Nplot = Nt;
 % Numerical Solution c for Nt timesteps
 
 %first order
-[c_flux_first, tend] = transient_pentacyc(c0, x, dt, CFL, Ne, Nt, Nplot, 0);
+[c_flux_first, ~] = transient_pentacyc(c0, x, dt, CFL, Ne, Nt, Nplot, 0);
 
 %second order
-[c_flux_second tend] = transient_pentacyc(c0, x, dt, CFL, Ne, Nt, Nplot, 1);
+[c_flux_second, ~] = transient_pentacyc(c0, x, dt, CFL, Ne, Nt, Nplot, 1);
 
 %superbee
-[c_flux_sup, tend] = transient_pentacyc(c0, x, dt, CFL, Ne, Nt, Nplot, 2);
+[c_flux_superbee, ~] = transient_pentacyc(c0, x, dt, CFL, Ne, Nt, Nplot, 2);
 
 %Minmod
-[c_flux_sup, tend] = transient_pentacyc(c0, x, dt, CFL, Ne, Nt, Nplot, 3);
+[c_flux_minmod, ~] = transient_pentacyc(c0, x, dt, CFL, Ne, Nt, Nplot, 3);
 
 
 %MC
@@ -73,16 +73,18 @@ hold off;
 %% 4. Analysing change of gauss curve with superbee --------------------------- %
 fig2 = figure; % creating a figure to later on save it
 set(fig2, 'defaulttextinterpreter', 'latex') % enabling LaTex styling
-Nt = 100;
-Nplot = Nt/4;
+Nt = 40;
+Nplot = Nt/3;
 
 [n, x, c0] = init(1); % Provided (on Stud.IP), gaussian curve
 plot(x,c0, 'DisplayName', 'initial')
 hold on;
 %superbee
-[c_flux_sup, tend] = transient_pentacyc(c0, x, dt, CFL, Ne, Nt, Nplot, 2);
+[c_flux_sup, ~] = transient_pentacyc(c0, x, dt, CFL, Ne, Nt, Nplot, 2);
+[c_flux_minmod, ~] = transient_pentacyc(c0, x, dt, CFL, Ne, Nt, Nplot, 3);
 [c_flux_MC, tend] = transient_pentacyc(c0, x, dt, CFL, Ne, Nt, Nplot, 4);
 legend('Location', 'bestoutside');
+title('The change of the guassian curve by the flux limiters - a comparaison.')
 disp('Saving the figure as gauss_superbee.png...');
 saveas(fig1, 'gauss_superbee.png');
 
