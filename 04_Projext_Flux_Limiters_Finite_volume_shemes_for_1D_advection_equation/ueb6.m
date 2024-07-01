@@ -30,23 +30,64 @@ D = Ne*dx^2/dt; % [m^2/s] Dispersion
 
 
 %% 2. Solving our problem both numerically and analytically
-fig = figure; % creating a figure to later on save it
-set(fig, 'defaulttextinterpreter', 'latex') % enabling LaTex styling
+fig1 = figure; % creating a figure to later on save it
+set(fig1, 'defaulttextinterpreter', 'latex') % enabling LaTex styling
 Nplot = Nt;
 
 % Numerical Solution c for Nt timesteps
-[c_flux, tend] = transient_pentacyc(c0, x, dt, CFL, Ne, Nt, Nplot, 2);
+
+%first order
+[c_flux_first, tend] = transient_pentacyc(c0, x, dt, CFL, Ne, Nt, Nplot, 0);
+
+%second order
+[c_flux_second tend] = transient_pentacyc(c0, x, dt, CFL, Ne, Nt, Nplot, 1);
+
+%superbee
+[c_flux_sup, tend] = transient_pentacyc(c0, x, dt, CFL, Ne, Nt, Nplot, 2);
+
+%Minmod
+[c_flux_sup, tend] = transient_pentacyc(c0, x, dt, CFL, Ne, Nt, Nplot, 3);
+
+
+%MC
+[c_flux_MC, tend] = transient_pentacyc(c0, x, dt, CFL, Ne, Nt, Nplot, 4);
+
+
+
 % Analytical Solution c at t = tend
 c_ana = transient_ana(x, tend, c_ini, w, L_c, v, D);
 
 
-plot(x, c_ana, '-', 'Color', 'black', 'DisplayName', ['Analytical @ t = ' num2str(tend) ' [s]'], 'LineWidth', 1.5);
-title(['Analytical solution vs Numerical solution, Nt = ' num2str(Nt)] )
+plot(x, c_ana, '-', 'Color', 'black', 'DisplayName', ['Analytical @ t = ' num2str(tend) ' [s]'], 'LineWidth', .5);
+title(['Analytical solution vs Numerical solutions, Nt = ' num2str(Nt)] )
 legend('Location', 'bestoutside');
 
-%% 3. Saving our figure as 'transientNt3.png' when needed: --------------------------- %
+%% 3. Saving our figure--------------------------- %
 
 disp('Saving the figure as transient_compare.png...');
-saveas(fig, 'transient_compare.png');
+saveas(fig1, 'transient_compare.png');
 
 disp('Figured saved!');
+hold off;
+
+%% 4. Analysing change of gauss curve with superbee --------------------------- %
+fig2 = figure; % creating a figure to later on save it
+set(fig2, 'defaulttextinterpreter', 'latex') % enabling LaTex styling
+Nt = 100;
+Nplot = Nt/4;
+
+[n, x, c0] = init(1); % Provided (on Stud.IP), gaussian curve
+plot(x,c0, 'DisplayName', 'initial')
+hold on;
+%superbee
+[c_flux_sup, tend] = transient_pentacyc(c0, x, dt, CFL, Ne, Nt, Nplot, 2);
+[c_flux_MC, tend] = transient_pentacyc(c0, x, dt, CFL, Ne, Nt, Nplot, 4);
+legend('Location', 'bestoutside');
+disp('Saving the figure as gauss_superbee.png...');
+saveas(fig1, 'gauss_superbee.png');
+
+disp('Figured saved!');
+hold off;
+
+
+
