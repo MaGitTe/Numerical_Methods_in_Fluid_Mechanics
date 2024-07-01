@@ -16,8 +16,7 @@ function [c, tend] = transient_pentacyc(c0, x, dt, CFL, Ne, Nt, Nplot, del)
 %   CFL: (scalar) Courant number
 %   Ne:  (scalar) Neumann number
 %   Nt:  (scalar) Number of time steps
-%   del: (func) 0 firstorder; 1 Lax Wendroff; 2 Superbee; 3 Minmod; 4 MC
-%    
+%   del: (scalar) Selected Scheme -> 0: First Order, 1: Lax Wendroff, 2: Superbee, 3: Minmod, 4: MC
 %   Nplot: (scalar) plotting interval
 
 %   Output:
@@ -28,14 +27,15 @@ function [c, tend] = transient_pentacyc(c0, x, dt, CFL, Ne, Nt, Nplot, del)
 %% 1. Setting up the system of equations
 nx = length(c0); % Extracting the size of the initial condition c0
 
+% Defining the matrices of our problem
 Pb = tridiagcyc(nx, -1, 1, 0);
 Pf = tridiagcyc(nx, 0, -1, 1);
-Pc = tridiagcyc(nx,-1,0,1);
+Pc = 0.5*tridiagcyc(nx,-1,0,1); % Adjusting the 0.5 here
 I = eye(nx);
 
 Ob = pentadiagcyc(nx, -1, 1, 0, 0, 0);
 Of = pentadiagcyc(nx, 0, -1, 1, 0, 0);
-Oc = pentadiagcyc(nx, -1, 0, 1, 0, 0 );
+Oc = 0.5*pentadiagcyc(nx, -1, 0, 1, 0, 0); % And ajusting the 0.5 here
 
 
 
@@ -59,6 +59,7 @@ while n <= Nt % break condition
         flux_delimiter =  -(0.5*CFL*(1-CFL)*(flux_delimiter_p - flux_delimiter_m));
         label = 'second order';
     end
+    
     if del == 2 %superbee
     
         Ap = minmod(2.* Pb*c, Pf*c);
@@ -73,6 +74,7 @@ while n <= Nt % break condition
         flux_delimiter = -(0.5*CFL*(1-CFL)*(deltaC_superbee_p - deltaC_superbee_m));
         label = 'superbee';
     end
+    
     if del == 3 %minmod delimiter
         deltaC_minmod_p = minmod(Pb*c, Pf*c);
         deltaC_minmod_m = minmod(Ob*c, Of*c);
@@ -83,8 +85,8 @@ while n <= Nt % break condition
     if del == 4 %MC limiter
        
 
-        deltaC_MC_p = minmod(0.5.*Pc*c,minmod(2.*Pf*c,2.*Pb*c));
-        deltaC_MC_m = minmod(0.5.*Oc*c, minmod(2.*Of*c, 2.*Ob*c));
+        deltaC_MC_p = minmod(Pc*c,minmod(2.*Pf*c,2.*Pb*c));
+        deltaC_MC_m = minmod(Oc*c, minmod(2.*Of*c, 2.*Ob*c));
         flux_delimiter = -(0.5*CFL*(1-CFL)*(deltaC_MC_p-deltaC_MC_m));
         label = 'MC';
     end
@@ -95,7 +97,7 @@ while n <= Nt % break condition
     if mod(n, Nplot) == 0
         t = n*dt; % Used for the legend
         
-        plot(x, c, '--', 'DisplayName', [label '@ t = ' num2str(t) ' [s]'], 'LineWidth', 1.0);
+        plot(x, c, '--', 'DisplayName', [label ' @ t = ' num2str(t) ' [s]'], 'LineWidth', 1.0);
         hold on;
     end
 
